@@ -1,0 +1,14 @@
+.App {
+  padding: 30px;
+  display: flex;
+}
+
+.App > div {
+  margin-right: 50px;
+}
+.toDo{
+  border: 1px solid red  ;
+  background-color: rgb(50, 148, 127);
+  padding: 10px;
+  border-radius: 10px;
+}
