@@ -1,14 +1,15 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
 
 
-type ButtonPropsType ={
+type ButtonPropsType = {
    nameButton: string
+   onClickHandler?: () => void
 }
-export const Button: FC<ButtonPropsType> =(props) => {
-   debugger
+export const Button: FC<ButtonPropsType> = (props) => {
+
    return (
       <>
-         <button>{props.nameButton}</button>
+         <button onClick={props.onClickHandler}>{props.nameButton}</button>
       </>
    );
 };

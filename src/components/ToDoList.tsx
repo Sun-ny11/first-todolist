@@ -1,12 +1,13 @@
 import React from "react";
 import { Button } from "./Button";
 import { Task } from "./Task";
+import { TasksList } from "./TasksList";
 
 
-type ToDoListPropsType = {
+export type ToDoListPropsType = {
    title: string
    tasks: Array<TaskPropsType>
-
+   removeTask: (taskId: number) => void
 }
 
 export type TaskPropsType = {
@@ -14,7 +15,7 @@ export type TaskPropsType = {
    title: string
    isDone: boolean
 }
-export const ToDoList: React.FC<ToDoListPropsType> = ({ title, tasks }) => {
+export const ToDoList: React.FC<ToDoListPropsType> = ({ title, tasks, removeTask }) => {
    //1
    // const title = props.title
    // const tasks: Array<TaskPropsType> = props.tasks
@@ -26,29 +27,20 @@ export const ToDoList: React.FC<ToDoListPropsType> = ({ title, tasks }) => {
    //const { title, tasks } = props
 
    //4 Вариант передать в ToDoList
-   
-   const listItems: Array<JSX.Element> = []
-   for (let i = 0; i < tasks.length; i++) {
-      
-      listItems.push(<Task title={tasks[i].title} isDone={tasks[i].isDone}/>)
-      //listItems.push<Task {...tasks[i]}>)
-   };
+
+
 
    return (
       <div className="toDo">
          <h3>{title}</h3>
          <div>
             <input />
-            <Button nameButton={"+"} />
+            <Button nameButton={"+"} onClickHandler={() => { }} />
          </div>
-         <ul>
-            {listItems}
-         </ul>
-         <div>
-            <Button nameButton={"All"} />
-            <Button nameButton={"Active"} />
-            <Button nameButton={"Completed"} />
-         </div>
+         <TasksList removeTask={removeTask} tasks={tasks}  />
+
       </div>
    );
 };
+
+export default ToDoList

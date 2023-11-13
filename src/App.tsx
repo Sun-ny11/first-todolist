@@ -1,26 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { TaskPropsType, ToDoList } from './components/ToDoList';
+//CRUD
 
 function App() {
-    const toDoTitle_1: string = "What to learn"
-    const toDoTitle_2: string = "What to buy"
+    //BLL:
+    const toDoTitle: string = "What to learn"
 
-    const task_1: Array<TaskPropsType> = [
-        {id: 1, title: "HTML", isDone: true},
-        {id: 2, title: "js/es6", isDone: false},
-        {id: 3, title: "react", isDone: false},
-    ]
-    const task_2: Array<TaskPropsType> = [
-        {id: 4, title: "beer", isDone: true},
-        {id: 5, title: "bred", isDone: true},
-        {id: 6, title: "cheeps", isDone: false},
-    ]
+    //state
+    // const tasks: Array<TaskPropsType> = 
+    const [tasks, setTasks] = useState<Array<TaskPropsType>>([
+        { id: 1, title: "HTML", isDone: true },
+        { id: 2, title: "js/es6", isDone: false },
+        { id: 3, title: "react", isDone: false },
+    ])
 
+    //delete
+    const removeTask = (taskId: number) => {
+        const nextState: Array<TaskPropsType> = []
+        for (let i = 0; i < tasks.length; i++) {
+            if (tasks[i].id !== taskId) {
+                nextState.push(tasks[i])
+            }
+
+        }
+        setTasks(nextState)
+    }
+
+    //UI:
     return (
         <div className="App">
-            <ToDoList title={toDoTitle_1} tasks={task_1}/>
-            <ToDoList title={toDoTitle_2} tasks={task_2}/>
+            <ToDoList removeTask={removeTask} title={toDoTitle} tasks={tasks} />
         </div>
     );
 }
