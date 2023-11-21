@@ -1,44 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "./Button";
-import { Task } from "./Task";
 import { TasksList } from "./TasksList";
 
 
 export type ToDoListPropsType = {
    title: string
    tasks: Array<TaskPropsType>
-   removeTask: (taskId: number) => void
+   removeTask: (taskId: string) => void
+   addTask: (title: string) => void
 }
 
 export type TaskPropsType = {
-   id: number
+   id: string
    title: string
    isDone: boolean
 }
-export const ToDoList: React.FC<ToDoListPropsType> = ({ title, tasks, removeTask }) => {
-   //1
-   // const title = props.title
-   // const tasks: Array<TaskPropsType> = props.tasks
+export const ToDoList: React.FC<ToDoListPropsType> = ({ title, tasks, removeTask, addTask }) => {
+   const [newTaskTitle, setTitle] = useState('')
 
-   //2
-   // const { title: myTitle, tasks: myTasks } = props
+   const onClickAddTask = () => {
+      addTask(newTaskTitle)
+      setTitle("")
+   }
 
-   //3
-   //const { title, tasks } = props
+   const onKeyDownAddTask = (e: React.KeyboardEvent<HTMLInputElement>) => {
+         e.key === "Enter"
+         && Boolean(newTaskTitle)
+         && newTaskTitle.length < 15
+         && onClickAddTask()
+   }
 
-   //4 Вариант передать в ToDoList
-
-
-
+   const maxTitleLengthError = newTaskTitle.length >= 15
+   const onChengSetTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.currentTarget.value.length <= 15) {
+         setTitle(e.currentTarget.value)
+      }
+   }
    return (
       <div className="toDo">
          <h3>{title}</h3>
          <div>
-            <input />
-            <Button nameButton={"+"} onClickHandler={() => { }} />
+            <input value={newTaskTitle} onChange={onChengSetTitle} onKeyDown={onKeyDownAddTask} />
+            <Button
+               nameButton={"+"}
+               onClickHandler={onClickAddTask}
+               disabled={!newTaskTitle || maxTitleLengthError} />
+            {maxTitleLengthError && <div>Your task title is to long</div>}
          </div>
-         <TasksList removeTask={removeTask} tasks={tasks}  />
-
+         <TasksList removeTask={removeTask} tasks={tasks} />
       </div>
    );
 };
