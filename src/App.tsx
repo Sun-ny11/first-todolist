@@ -23,6 +23,7 @@ function App() {
     const removeTask = (taskId: string) => {
         setTasks(tasks.filter(t => t.id !== taskId))
     }
+    //create
     const addTask = (title: string) => {
         const newTask: TaskPropsType = {
             id: v1(),
@@ -33,13 +34,23 @@ function App() {
 
         setTasks(nextState)
     }
+
+    //update task (isDone)
+    const changeTaskStatus = (taskID:string, isDone:boolean) => {
+        setTasks(tasks.map(t => t.id === taskID?{...t, isDone: isDone}:t)) //setTasks(tasks.map(t => t.id === taskID?{...t, isDone}:t))
+    }
+    //update task (Title)
+
+
     //UI:
     return (
         <div className="App">
             <ToDoList removeTask={removeTask}
                 title={toDoTitle}
                 tasks={tasks}
-                addTask={addTask} />
+                addTask={addTask}
+                changeTaskStatus={changeTaskStatus} />
+                
         </div>
     );
 }
